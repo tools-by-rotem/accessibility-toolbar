@@ -118,6 +118,7 @@
             margin-top: 20px;
             text-decoration: none;
             color: #007bff;
+            text-decoration: underline;
         }
 
         .content a:hover {
@@ -213,43 +214,47 @@
             </p>
             <p>
                 מסירת מידע בפורמט נגיש: המשרד מעמיד עבור לקוחותיו אפשרות לקבלת מידע בפורמטים נגישים ללא עלות, מיועדים עבור אנשים עם מוגבלות.
-                לפניות ומידע בנושא נגישות ניתן ליצור קשר עם רכז/ת הנגישות של המשרד שפרטיו/ה מופיעים בהמשך ההצהרה.
-            </p>
-            <h3>דרכי פנייה לבקשות והצעות לשיפור בנושא נגישות</h3>
-            <p>
-                אנו מזמינים אתכם לפנות אלינו בכל שאלה, הערה, או הצעה לשיפור בנושא נגישות. נשמח לשמוע מכם ולסייע ככל הניתן, תוכלו לפנות אלינו דרך טופס
-                יצירת הקשר בעמוד יצירת הקשר.
+                לפניות ומידע בנושא נגישות ניתן ליצור קשר עם נציגי המשרד.
             </p>
             <button id="close-modal">סגור</button>
         </div>
     </div>
 
     <script>
-        let toolbarVisible = false;
+        // הפעלת כפתור הסרגל
+        const toggleButton = document.getElementById('accessibility-toggle');
+        const toolbar = document.getElementById('accessibility-toolbar');
+        let isToolbarOpen = false;
 
-        // פתיחת וסגירת סרגל הנגישות
-        document.getElementById('accessibility-toggle').addEventListener('click', () => {
-            toolbarVisible = !toolbarVisible;
-            document.getElementById('accessibility-toolbar').style.right = toolbarVisible ? '0' : '-320px';
-            document.getElementById('accessibility-toolbar').setAttribute('aria-hidden', !toolbarVisible);
+        toggleButton.addEventListener('click', () => {
+            isToolbarOpen = !isToolbarOpen;
+            toolbar.style.right = isToolbarOpen ? '0' : '-320px'; // הצגת או החבאת הסרגל
+            toolbar.setAttribute('aria-hidden', !isToolbarOpen);
         });
 
-        // הגדלת גודל הטקסט
+        // הגדרת גודל טקסט
+        let currentFontSize = 16;
+
         document.getElementById('increase-font').addEventListener('click', () => {
-            document.body.style.fontSize = 'larger';
+            if (currentFontSize < 32) { // עד 200%
+                currentFontSize += 2; // הגדלה של 2 פיקסלים
+                document.body.style.fontSize = currentFontSize + 'px';
+            }
         });
 
-        // הקטנת גודל הטקסט
         document.getElementById('decrease-font').addEventListener('click', () => {
-            document.body.style.fontSize = 'smaller';
+            if (currentFontSize > 12) { // מינימום 12%
+                currentFontSize -= 2; // הקטנה של 2 פיקסלים
+                document.body.style.fontSize = currentFontSize + 'px';
+            }
         });
 
-        // הפעלת ניגודיות גבוהה
+        // ניגודיות גבוהה
         document.getElementById('high-contrast').addEventListener('click', () => {
             document.body.classList.toggle('high-contrast');
         });
 
-        // הפעלת גווני אפור
+        // גווני אפור
         document.getElementById('grayscale').addEventListener('click', () => {
             document.body.classList.toggle('grayscale');
         });
@@ -264,25 +269,22 @@
             document.body.classList.toggle('text-spacing');
         });
 
-        // הצגת הצהרת נגישות
+        // הצהרת נגישות
         document.getElementById('accessibility-statement').addEventListener('click', () => {
-            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('modal').style.display = 'flex'; // הצגת מודאל
         });
 
-        // סגירת המודאל
+        // סגירת מודאל
         document.getElementById('close-modal').addEventListener('click', () => {
-            document.getElementById('modal').style.display = 'none';
+            document.getElementById('modal').style.display = 'none'; // החבאת מודאל
         });
 
         // איפוס הגדרות
         document.getElementById('reset-settings').addEventListener('click', () => {
-            document.body.style.fontSize = '16px';
+            currentFontSize = 16; // אפס את גודל הטקסט לברירת מחדל
+            document.body.style.fontSize = currentFontSize + 'px';
             document.body.classList.remove('high-contrast', 'grayscale', 'highlight-links', 'text-spacing');
-            toolbarVisible = false;
-            document.getElementById('accessibility-toolbar').style.right = '-320px';
-            document.getElementById('accessibility-toolbar').setAttribute('aria-hidden', 'true');
         });
     </script>
-
 </body>
 </html>
